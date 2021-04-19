@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+canvas {
+    border:1px solid #d3d3d3;
+    background-color: #f1f1f1;
+}
+</style>
+</head>
+<body onload="startGame()">
+<script>
+
+var myGamePiece1,myGamePiece2,myGamePiece3,myGamePiece4,myGamePiece5,myGamePiece6,myGamePiece7,myGamePiece8;
+var x = 50, y = 50;
+
+function startGame() {
+    myGameArea.start();
+    myGamePiece1 = new component(x, y, true, x, x);
+    myGamePiece2 = new component(x, y, true, 3*x, x);
+    myGamePiece3 = new component(x, y, true, 5*x, x);
+    myGamePiece4 = new component(x, y, true, x, 3*x);
+    myGamePiece5 = new component(x, y, true, 5*x, 3*x);
+    myGamePiece6 = new component(x, y, true, x, 5*x);
+    myGamePiece7 = new component(x, y, true, 3*x, 5*x);
+    myGamePiece8 = new component(x, y, true, 5*x, 5*x);
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 350;
+        this.canvas.height = 350;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.canvas.addEventListener('click', function(event) {
+          var a = Math.floor(event.pageX/x),
+              b = Math.floor(event.pageY/x);
+          if (a == 1 && b == 1) {
+              myGamePiece1.on = !myGamePiece1.on;
+              Render(a,b,myGamePiece1.on);
+              myGamePiece2.on = !myGamePiece2.on;
+              Render(3,b,myGamePiece2.on);
+              myGamePiece4.on = !myGamePiece4.on;
+              Render(a,3,myGamePiece4.on);
+          }
+          if (a == 3 && b == 1) {
+              myGamePiece1.on = !myGamePiece1.on;
+              Render(1,b,myGamePiece1.on);
+              myGamePiece2.on = !myGamePiece2.on;
+              Render(3,b,myGamePiece2.on);
+              myGamePiece3.on = !myGamePiece3.on;
+              Render(5,b,myGamePiece3.on);
+          }
+          if (a == 5 && b == 1) {
+              myGamePiece3.on = !myGamePiece3.on;
+              Render(5,b,myGamePiece3.on);
+              myGamePiece2.on = !myGamePiece2.on;
+              Render(3,b,myGamePiece2.on);
+              myGamePiece5.on = !myGamePiece5.on;
+              Render(5,3,myGamePiece5.on);
+          }
+          if (a == 1 && b == 3) {
+              myGamePiece1.on = !myGamePiece1.on;
+              Render(a,1,myGamePiece1.on);
+              myGamePiece6.on = !myGamePiece6.on;
+              Render(a,5,myGamePiece6.on);
+              myGamePiece4.on = !myGamePiece4.on;
+              Render(a,b,myGamePiece4.on);
+          }
+          if (a == 5 && b == 3) {
+              myGamePiece3.on = !myGamePiece3.on;
+              Render(a,1,myGamePiece3.on);
+              myGamePiece5.on = !myGamePiece5.on;
+              Render(a,b,myGamePiece5.on);
+              myGamePiece8.on = !myGamePiece8.on;
+              Render(a,5,myGamePiece8.on);
+          }
+          if (a == 1 && b == 5) {
+              myGamePiece7.on = !myGamePiece7.on;
+              Render(3,b,myGamePiece7.on);
+              myGamePiece6.on = !myGamePiece6.on;
+              Render(a,b,myGamePiece6.on);
+              myGamePiece4.on = !myGamePiece4.on;
+              Render(a,3,myGamePiece4.on);
+          }
+          if (a == 3 && b == 5) {
+              myGamePiece6.on = !myGamePiece6.on;
+              Render(1,b,myGamePiece6.on);
+              myGamePiece7.on = !myGamePiece7.on;
+              Render(a,b,myGamePiece7.on);
+              myGamePiece8.on = !myGamePiece8.on;
+              Render(5,b,myGamePiece8.on);
+          }
+          if (a == 5 && b == 5) {
+              myGamePiece5.on = !myGamePiece5.on;
+              Render(a,3,myGamePiece5.on);
+              myGamePiece7.on = !myGamePiece7.on;
+              Render(3,b,myGamePiece7.on);
+              myGamePiece8.on = !myGamePiece8.on;
+              Render(a,b,myGamePiece8.on);
+          }
+		}, false);
+    }
+}
+
+function Render(aa, bb, on){
+	if (!on) {
+      ctx.fillStyle = "red";
+    } else {
+      ctx.fillStyle = "blue";
+    }
+    ctx.fillRect(aa*x, bb*x, x, x);
+}
+
+function component(width, height, on, x, y) {
+    this.width = width;
+    this.height = height;
+    this.x = x;
+    this.y = y;
+    this.on = on;
+    ctx = myGameArea.context;
+    if (!this.on) {
+      ctx.fillStyle = "red";
+    } else {
+      ctx.fillStyle = "blue";
+    }
+    ctx.fillRect(this.x, this.y, this.width, this.height);
+}
+
+</script>
+</body>
+</html>
